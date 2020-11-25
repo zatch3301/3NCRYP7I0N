@@ -252,7 +252,8 @@ and has not yet been compromised in any way.
  (unsigned) integers, which are not natively supported in JavaScript (in which all numbers are
  IEEE 754 64-bit floating-point numbers). A 'Long' library here provides UInt64-style support. 
     ''')
-    st.subheader('[Gagan Verma ^^](https://www.gaganv.me/)')
+    st.markdown("""<a href="http://www.gaganv.me" target="_blank" style="text-decoration: none; font-weight: bold; font-size: 20px; color: #4CA1AF;">Gagan Verma</a>""",unsafe_allow_html=True)
+    st.markdown("""<a href="https://www.hackthebox.eu/" target="_blank"><img src="http://www.hackthebox.eu/badge/image/346677" alt="Hack The Box"></a>""", unsafe_allow_html=True)
 
 def main():
     # st.write("All in one tool")
