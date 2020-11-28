@@ -4,8 +4,6 @@ import base64
 import urllib.parse
 import hashlib
 import random, string
-
-
 def encode_rot13(s):
     return codecs.encode(s, 'rot13')
 
@@ -18,6 +16,10 @@ def encode_base64(s):
 def decode_base64(s):
     return base64.b64decode(s.encode("ascii")).decode("ascii") 
 
+def encode_hex(s):
+    return s.encode("utf-8").hex()
+def decode_hex(s):
+    return bytearray.fromhex(s).decode()
 def encode_url(s):
     return urllib.parse.quote(s)
 
@@ -36,17 +38,16 @@ def encode_sha256(s):
 def encode_sha512(s):
     return hashlib.sha512(s.encode('utf-8')).hexdigest()
 
-
 # Password Generator 
 
-def password(length,num=False,strength='weak'):
+def password(length,num=False,strength='Weak'):
     lower = string.ascii_lowercase
     upper = string.ascii_uppercase
     letter = lower + upper
     dig = string.digits
     punct = string.punctuation
     pwd = ''
-    if strength == 'weak':
+    if strength == 'Weak':
         if num:
             length -= 2
             for i in range(2):
@@ -54,14 +55,14 @@ def password(length,num=False,strength='weak'):
         for i in range(length):
             pwd += random.choice(lower)
 
-    elif strength == 'strong':
+    elif strength == 'Strong':
         if num:
             length -=2
             for i in range(2):
                 pwd += random.choice(dig)
         for i in range(length):
             pwd += random.choice(letter)
-    elif strength == 'very':
+    elif strength == 'Extreame':
         ran = random.randint(2,4)
         if num:
             length -= ran
@@ -84,7 +85,7 @@ def encode_decode():
 
     st.subheader("Encoder")
     text1 = st.text_input("Enter the text you need to decode")
-    typ1 = st.selectbox('Encoding type',['ROT13','base64','url',
+    typ1 = st.selectbox('Encoding type',['ROT13','base64','hex','url',
     'md5','sha1','sha256','sha512'])
     if text1 != "":
         if typ1 == 'ROT13':
@@ -101,10 +102,12 @@ def encode_decode():
             st.success(encode_sha256(text1))
         elif typ1 == 'sha512':
             st.text_area("SHA512 Encoded",encode_sha512(text1))
+        elif typ1 == 'hex':
+            st.text_area("Hex Encoded",encode_hex(text1))
 
     st.subheader("Decoder")
     text2 = st.text_area("Enter the text you need to decode")
-    typ = st.selectbox('Decoding type',['ROT13','base64','url'])
+    typ = st.selectbox('Decoding type',['ROT13','base64','hex','url'])
     if text2 != "":
         if typ == 'ROT13':
             try:
@@ -121,12 +124,17 @@ def encode_decode():
                 st.success(decode_url(text2))
             except ValueError:
                 st.error('Please enter url encoded text')
+        elif typ == 'hex':
+            try:
+                st.success(decode_hex(text2))
+            except ValueError:
+                st.error('Please enter hex encoded text')
 
 def pass_gen():
     st.header("Password Generator")
     leng = st.slider('Password length', min_value=8, max_value=32)
     num = st.checkbox('Add numbers to your password')
-    typ = st.selectbox('Password strength',['weak','strong','very'])
+    typ = st.selectbox('Password strength',['Weak','Strong','Extream'])
     if st.button("Generate Password"):
         pswd = password(leng,num,typ)
         st.success(pswd)
@@ -254,11 +262,12 @@ and has not yet been compromised in any way.
     ''')
     st.markdown("""<a href="http://www.gaganv.me" target="_blank" style="text-decoration: none; font-weight: bold; font-size: 20px; color: #4CA1AF;">Gagan Verma</a>""",unsafe_allow_html=True)
     st.markdown("""<a href="https://www.hackthebox.eu/" target="_blank"><img src="http://www.hackthebox.eu/badge/image/346677" alt="Hack The Box"></a>""", unsafe_allow_html=True)
-
+    st.markdown("Contributor : ")
+    st.markdown("""<a href="https://github.com/souravsingpardeshi" target="_blank" style="text-decoration: none; font-weight: bold; font-size: 14px; color: #4CA1AF;">Souravsing Pardeshi</a>""",unsafe_allow_html=True)
 def main():
     # st.write("All in one tool")
     activities = ["Home", "Encode Decode", "Password Generator", "About"]
-    choice = st.sidebar.selectbox("Modules", activities)
+    choice = st.sidebar.selectbox("Navbar", activities)
     hide_streamlit_style = """
         <title> Yato </title>
         <style>
