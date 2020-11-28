@@ -18,8 +18,10 @@ def decode_base64(s):
 
 def encode_hex(s):
     return s.encode("utf-8").hex()
+
 def decode_hex(s):
     return bytearray.fromhex(s).decode()
+
 def encode_url(s):
     return urllib.parse.quote(s)
 
@@ -38,8 +40,8 @@ def encode_sha256(s):
 def encode_sha512(s):
     return hashlib.sha512(s.encode('utf-8')).hexdigest()
 
-# Password Generator 
 
+# Password Generator 
 def password(length,num=False,strength='Weak'):
     lower = string.ascii_lowercase
     upper = string.ascii_uppercase
@@ -62,7 +64,7 @@ def password(length,num=False,strength='Weak'):
                 pwd += random.choice(dig)
         for i in range(length):
             pwd += random.choice(letter)
-    elif strength == 'Extreame':
+    elif strength == 'Extreme':
         ran = random.randint(2,4)
         if num:
             length -= ran
@@ -134,7 +136,7 @@ def pass_gen():
     st.header("Password Generator")
     leng = st.slider('Password length', min_value=8, max_value=32)
     num = st.checkbox('Add numbers to your password')
-    typ = st.selectbox('Password strength',['Weak','Strong','Extream'])
+    typ = st.selectbox('Password strength',['Weak','Strong','Extreme'])
     if st.button("Generate Password"):
         pswd = password(leng,num,typ)
         st.success(pswd)
