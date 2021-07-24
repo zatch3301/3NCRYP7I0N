@@ -290,7 +290,7 @@ def main():
         body{color: #ffffff; background-color: #000;} 
         """,unsafe_allow_html=True)
         st.header("3NCRYPTI0N")
-        st.subheader(":smile: Welcome ^^")
+        st.subheader(":sunglasses: Welcome to my app ^^")
         st.image("img/ENCRYPTION.gif")
         st.write('''
         ---
